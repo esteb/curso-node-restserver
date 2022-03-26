@@ -85,6 +85,9 @@ const usuariosDelete = async(req, res = response) => {
 
     const { id } = req.params;
 
+    //const uid = req.uid; //el uid que se envío desde \middlewares\validar-jwt.js:validarJWT()
+    const usuarioAutenticado = req.usuario;
+
     //borrar fidicamente
     //const usuario = await Usuario.findByIdAndDelete( id );
 
@@ -92,7 +95,7 @@ const usuariosDelete = async(req, res = response) => {
     //ES MUY recomendable por la integridad referencial
     const usuario = await Usuario.findByIdAndUpdate( id, { estado: false} );
 
-    res.status(200).json( usuario);
+    res.status(200).json( {usuario, usuarioAutenticado});
 }
 
 const usuariosPatch = (req, res) => {

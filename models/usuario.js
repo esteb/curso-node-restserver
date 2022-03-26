@@ -51,7 +51,12 @@ const UsuarioSchema = Schema({
 UsuarioSchema.methods.toJSON = function() {
     // desestructuramos lo que viene del this
     //estamos sacando el __v y el password y todos los demas quedarpan en la variable usuario
-    const { __v, password, ...usuario } = this.toObject();
+    const { __v, password, _id, ...usuario } = this.toObject();
+    
+    //cambio de nombre el _id por uid
+    //entonces al objeto usuario le creo el elemento uid con el valor del _id
+    usuario.uid = _id;
+    
     return usuario;
 }
 

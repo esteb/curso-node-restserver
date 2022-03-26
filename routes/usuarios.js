@@ -1,13 +1,23 @@
 //rutas relacionadas a los usuarios
 
 const { Router} = require('express');
-const { validarCampos } = require('../middlewares/validar-campos')
+
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarJWT } = require('../middlewares/validar-jwt');
+// const { esAdminRole, tieneRole } = require('../middlewares/validar-roles');
+const {  validarCampos,
+         validarJWT,
+         esAdminRole,
+         tieneRole
+} = require('../middlewares'); //por defecto tomará el index.js
+
 
 //gran coleccion de middlewares
 const { check } = require('express-validator');
 
 const { usuariosGet, usuariosPost, usuariosPut, usuariosDelete, usuariosPatch } = require('../controllers/usuarios');
 const { esRoleValido, mailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
+
 
 
 const router = Router();
@@ -38,6 +48,9 @@ router.put('/:id',[
 ], usuariosPut);
 
 router.delete('/:id',[
+    validarJWT,
+    // esAdminRole, // este middleware fuerza a que el usuario tenga que ser ADMIN_ROLES
+    tieneRole('ADMIN_ROLES', 'VENTAS_ROLES' ),
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( existeUsuarioPorId ),
     validarCampos  // MI middleware personalizado

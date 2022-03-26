@@ -9,7 +9,9 @@ class Server{
         //crear en mi servidor cuando se hace una nueva instancia crea una app de express como una propiedad en la misma clase del Servidor
         this.app = express()
         this.port = process.env.PORT; 
-        this.usuariosPath = '/api/usuarios';
+        
+        this.usuariosPath   = '/api/usuarios';
+        this.authPath       = '/api/auth';
 
         //Conectar a base de datos
         this.conectarDB();
@@ -45,7 +47,9 @@ class Server{
     routes(){
         //aplicamos un middleware
         //nuevo path: /api/usuarios el que se usará en postman y el front para solicitar los endpoint
-        //redirecciona a '../routes/user' para consumir los endpoint
+        //redirecciona a '../routes/usuarios.js' para consumir los endpoint
+        
+        this.app.use(   this.authPath, require('../routes/auth'));
         this.app.use(   this.usuariosPath, require('../routes/usuarios'));
     }
 

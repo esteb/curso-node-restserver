@@ -38,7 +38,7 @@
 
             const body = { id_token: response.credential }
 
-            fetch('http://localhost:8080/api/auth/google', {
+            fetch('/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -61,7 +61,7 @@
             google.accounts.id.disableAutoSelect();
 
             google.accounts.id.revoke( localStorage.getItem( 'email' ), done => {
-                
+
                 // una vez ejecutado el revoke quiero hacer esto:
                 localStorage.clear(); // limpiamos el correo que teniamos
                 location.reload(); //para recargar la página y vaciar cualquir cosa q tengamos en nuestra app

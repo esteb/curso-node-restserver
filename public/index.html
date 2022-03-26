@@ -46,6 +46,8 @@
 
             const body = { id_token: response.credential }
 
+            console.log('url:', url);
+
             fetch( url , {
                 method: 'POST',
                 headers: {
